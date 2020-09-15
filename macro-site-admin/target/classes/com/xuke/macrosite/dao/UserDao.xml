@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuke.macrosite.dao.UserDao">
+    <resultMap id="userDetailMap" type="UserDetail" autoMapping="true">
+        <result property="avatar" column="url"/>
+        <collection property="roles" ofType="Role" autoMapping="true">
+        </collection>
+    </resultMap>
+
+    <sql id="getUserInfoSql">
+        select u.id,
+               u.username,
+               u.nickname,
+               u.email,
+               avatar.url,
+               ifnull(l.total_like, 0),
+               ifnull(a.total_articles, 0),
+               ifnull(c.total_comment, 0),
+               ifnull(co.total_collect, 0),
+               ifnull(pv.total_page_views, 0),
+               r.name,
+               u.last_login_date,
+               u.created_at,
+               u.updated_at
+        from `user` u
+                 LEFT JOIN avatar on u.id = avatar.uid
+
+                 LEFT JOIN (select count(*) total_articles, u.id id
+                            from user u
+                                     inner join article a on u.id = a.uid
+                            group by u.id) a on a.id = u.id
+
+                 LEFT JOIN (select count(*) total_like, u.id id
+                            from user u
+                                     inner join article a on u.id = a.uid
+                                     inner join `like` l on a.id = l.aid
+                            group by u.id) l on l.id = u.id
+
+                 LEFT JOIN (select count(*) total_comment, u.id id
+                            from user u
+                                     inner join article a on u.id = a.uid
+                                     inner join `comment` c on a.id = c.aid
+                            group by u.id) c on c.id = u.id
+
+                 LEFT JOIN (select count(*) total_collect, u.id id
+                            from user u
+                                     inner join article a on u.id = a.uid
+                                     inner join collect c on a.id = c.aid
+                            group by u.id) co on co.id = u.id
+
+                 LEFT JOIN (select sum(page_views) total_page_views, u.id id
+                            from user u
+                                     inner join article a on u.id = a.uid
+                            group by u.id) pv on pv.id = u.id
+
+                 LEFT JOIN user_role ur on ur.uid = u.id
+                 LEFT JOIN role r on r.id = ur.rid
+    </sql>
+    <select id="getMyUserInfo" resultMap="userDetailMap">
+        <include refid="getUserInfoSql"/>
+        where u.id = #{uid}
+    </select>
+
+    <select id="getAllUserInfo" resultMap="userDetailMap">
+        <include refid="getUserInfoSql"/>
+    </select>
+</mapper>
