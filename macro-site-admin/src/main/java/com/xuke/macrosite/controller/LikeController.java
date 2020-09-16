@@ -19,15 +19,19 @@ import javax.annotation.Resource;
 @RequestMapping("like")
 public class LikeController {
     @Resource
-    private LikeService collectService;
+    private LikeService likeService;
 
     @PostMapping("add")
-    public ResResult<Boolean> addCollect(@RequestBody LikeParams params) {
-        return ResResult.success(collectService.addCollect(params));
+    public ResResult<Boolean> addLike(@RequestBody LikeParams params) {
+        boolean flag = likeService.checkLike(params);
+        if (flag) return ResResult.badRequest("已经点赞过了,不能重复点赞");
+        return ResResult.success(likeService.addLike(params));
     }
 
     @PostMapping("cancel")
-    public ResResult<Boolean> cancelCollect(@RequestBody LikeParams params) {
-        return ResResult.success(collectService.cancelCollect(params));
+    public ResResult<Boolean> cancelLike(@RequestBody LikeParams params) {
+        boolean flag = likeService.checkLike(params);
+        if (!flag) return ResResult.badRequest("没有点赞过，无法取消点赞");
+        return ResResult.success(likeService.cancelLike(params));
     }
 }

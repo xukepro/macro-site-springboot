@@ -4,10 +4,7 @@ import com.xuke.macrosite.common.api.ResResult;
 import com.xuke.macrosite.pojo.dto.UserDetail;
 import com.xuke.macrosite.service.UserService;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,12 +18,12 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("info")
-    public ResResult<List<UserDetail>> getMyUserInfo(@RequestParam("uid") Integer uid) {
+    @GetMapping("info/{uid}")
+    public ResResult<List<UserDetail>> getMyUserInfo(@PathVariable("uid") Integer uid) {
         return ResResult.success(userService.getMyUserInfo(uid));
     }
 
-    @GetMapping("allInfo")
+    @GetMapping("info/all")
     public ResResult<List<UserDetail>> getAllUserInfo() {
         return ResResult.success(userService.getAllUserInfo());
     }

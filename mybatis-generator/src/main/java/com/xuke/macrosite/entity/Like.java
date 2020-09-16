@@ -14,7 +14,7 @@ public class Like implements Serializable {
     private Integer uid;
 
     @ApiModelProperty(value = "点赞时间")
-    private Date createAt;
+    private Date createdAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -42,12 +42,12 @@ public class Like implements Serializable {
         this.uid = uid;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Like implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", aid=").append(aid);
         sb.append(", uid=").append(uid);
-        sb.append(", createAt=").append(createAt);
+        sb.append(", createdAt=").append(createdAt);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

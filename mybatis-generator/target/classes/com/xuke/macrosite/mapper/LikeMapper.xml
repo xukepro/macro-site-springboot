@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="aid" jdbcType="INTEGER" property="aid" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, aid, uid, create_at
+    id, aid, uid, created_at
   </sql>
   <select id="selectByExample" parameterType="com.xuke.macrosite.entity.LikeExample" resultMap="BaseResultMap">
     select
@@ -102,9 +102,9 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into like (aid, uid, create_at
+    insert into like (aid, uid, created_at
       )
-    values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}
+    values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xuke.macrosite.entity.Like">
@@ -119,8 +119,8 @@
       <if test="uid != null">
         uid,
       </if>
-      <if test="createAt != null">
-        create_at,
+      <if test="createdAt != null">
+        created_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -130,8 +130,8 @@
       <if test="uid != null">
         #{uid,jdbcType=INTEGER},
       </if>
-      <if test="createAt != null">
-        #{createAt,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -153,8 +153,8 @@
       <if test="record.uid != null">
         uid = #{record.uid,jdbcType=INTEGER},
       </if>
-      <if test="record.createAt != null">
-        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -166,7 +166,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       aid = #{record.aid,jdbcType=INTEGER},
       uid = #{record.uid,jdbcType=INTEGER},
-      create_at = #{record.createAt,jdbcType=TIMESTAMP}
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -180,8 +180,8 @@
       <if test="uid != null">
         uid = #{uid,jdbcType=INTEGER},
       </if>
-      <if test="createAt != null">
-        create_at = #{createAt,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -190,7 +190,7 @@
     update like
     set aid = #{aid,jdbcType=INTEGER},
       uid = #{uid,jdbcType=INTEGER},
-      create_at = #{createAt,jdbcType=TIMESTAMP}
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

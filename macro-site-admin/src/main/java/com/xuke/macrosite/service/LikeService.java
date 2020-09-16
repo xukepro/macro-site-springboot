@@ -7,7 +7,9 @@ import com.xuke.macrosite.pojo.dto.LikeParams;
  * Created by xuke on 2020/9/15
  */
 public interface LikeService {
-    boolean addCollect(LikeParams params);
+    boolean addLike(LikeParams params);
 
-    boolean cancelCollect(LikeParams params);
+    boolean cancelLike(LikeParams params);
+
+    boolean checkLike(LikeParams params);
 }

@@ -1,6 +1,7 @@
 package com.xuke.macrosite.service.impl;
 
 import com.xuke.macrosite.dao.CollectDao;
+import com.xuke.macrosite.entity.Collect;
 import com.xuke.macrosite.pojo.dto.CollectParams;
 import com.xuke.macrosite.service.CollectService;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,10 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public boolean cancelCollect(CollectParams collectParams) {
         return collectDao.cancelCollect(collectParams);
+    }
+
+    @Override
+    public boolean checkCollect(CollectParams params) {
+        return collectDao.checkCollect(params) != null;
     }
 }

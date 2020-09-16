@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xuke.macrosite.dao.LikeDao">
 
-<!--    <resultMap id="likeArticle" type="ArticleDetail" autoMapping="true">-->
-
-<!--    </resultMap>-->
     <insert id="addLike">
         insert into `like` (uid, aid) values (#{uid}, #{aid})
     </insert>
@@ -13,20 +10,8 @@
         delete from `like` where uid = #{uid} and aid = #{aid}
     </delete>
 
-<!--    <select id="getMyLikeArticle" resultType="com.xuke.macrosite.entity.Article">-->
-<!--        select a.id,-->
-<!--               a.title,-->
-<!--               u.nickname author-->
+    <select id="checkLike" parameterType="LikeParams" resultType="Like">
+        select * from `like` where uid = #{uid} and aid = #{aid}
+    </select>
 
-<!--        from `like` l,-->
-<!--             article a,-->
-<!--             user u-->
-<!--        where l.aid = a.id-->
-<!--          and a.uid = u.id-->
-<!--          and l.uid = 1-->
-<!--    </select>-->
-
-<!--    <select id="getAllLikeArticle" resultType="com.xuke.macrosite.entity.Article">-->
-
-<!--    </select>-->
 </mapper>

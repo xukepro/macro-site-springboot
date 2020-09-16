@@ -16,12 +16,18 @@ public class LikeServiceImpl implements LikeService {
     private LikeDao likeDao;
 
     @Override
-    public boolean addCollect(LikeParams params) {
+    public boolean addLike(LikeParams params) {
         return likeDao.addLike(params);
     }
 
     @Override
-    public boolean cancelCollect(LikeParams params) {
+    public boolean cancelLike(LikeParams params) {
         return likeDao.cancelLike(params);
+    }
+
+    // 检查是否已经点赞了
+    @Override
+    public boolean checkLike(LikeParams params) {
+        return likeDao.checkLike(params) != null;
     }
 }

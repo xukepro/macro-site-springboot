@@ -1,12 +1,11 @@
 package com.xuke.macrosite.pojo.dto;
 
-import ch.qos.logback.core.rolling.helper.IntegerTokenConverter;
 import com.xuke.macrosite.entity.Role;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetail {
+public class UserDetail implements Serializable {
+    private static final long serialVersionUID = 1085987183255908079L;
     private Integer id;
     private String username;
     private String nickname;

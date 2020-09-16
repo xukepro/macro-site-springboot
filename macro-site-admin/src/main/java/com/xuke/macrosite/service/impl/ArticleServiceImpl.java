@@ -1,12 +1,15 @@
 package com.xuke.macrosite.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.github.pagehelper.PageHelper;
 import com.xuke.macrosite.dao.ArticleDao;
 import com.xuke.macrosite.entity.Article;
 import com.xuke.macrosite.pojo.dto.ArticleDetail;
 import com.xuke.macrosite.pojo.dto.CollectArticle;
+import com.xuke.macrosite.pojo.vo.AddArticleVO;
 import com.xuke.macrosite.pojo.vo.ArticleContentVO;
 import com.xuke.macrosite.pojo.vo.ArticleListVO;
+import com.xuke.macrosite.pojo.vo.UpdateArticleVO;
 import com.xuke.macrosite.service.ArticleService;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +27,15 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 
     @Override
-    public Article insert(Article article) {
+    public Article insert(AddArticleVO article) {
         articleDao.insert(article);
-        return article;
+        Article res = new Article();
+        BeanUtil.copyProperties(article, res);
+        return res;
     }
 
     @Override
-    public ArticleContentVO update(Article article) {
+    public ArticleContentVO update(UpdateArticleVO article) {
         articleDao.update(article);
         return getArticleContent(article.getId());
     }
@@ -42,16 +47,22 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public List<ArticleListVO> getArticleList(Integer uid, String key) {
+    public List<ArticleDetail> getArticleList(Integer uid, String key, Integer cid, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
         String keyword = "%" + key + "%";
-        List<ArticleDetail> articleDetailList = articleDao.getArticleList(uid, keyword);
-        List<ArticleListVO> articleListVOList = new ArrayList<>();
-        for (ArticleDetail articleDetail : articleDetailList) {
-            ArticleListVO articleListVO = new ArticleListVO();
-            BeanUtil.copyProperties(articleDetail, articleListVO);
-            articleListVOList.add(articleListVO);
-        }
-        return articleListVOList;
+        List<ArticleDetail> articleDetailList = articleDao.getArticleList(uid, keyword, cid);
+        return articleDetailList;
+//        System.out.println(articleDetailList.size());
+//        PageInfo<ArticleDetail> pageInfo = new PageInfo(articleDetailList);
+//        System.out.println(pageInfo.getTotal());
+
+//        List<ArticleListVO> articleListVOList = new ArrayList<>();
+//        for (ArticleDetail articleDetail : articleDetailList) {
+//            ArticleListVO articleListVO = new ArticleListVO();
+//            BeanUtil.copyProperties(articleDetail, articleListVO);
+//            articleListVOList.add(articleListVO);
+//        }
+//        return articleListVOList;
     }
 
     @Override

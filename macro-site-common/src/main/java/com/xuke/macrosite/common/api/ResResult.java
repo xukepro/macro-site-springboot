@@ -28,11 +28,15 @@ public class ResResult<T> {
     }
 
     public static <T> ResResult<T> failed(int code, String message) {
-        return new ResResult<T>(code, HttpCode.msg(code), null);
+        return new ResResult<T>(code, message, null);
     }
 
     public static <T> ResResult<T> failed(int code) {
         return failed(code, HttpCode.msg(code));
+    }
+
+    public static <T> ResResult<T> badRequest(String message) {
+        return new <T>ResResult(HttpCode.HTTP_BAD_REQUEST, message, null);
     }
 
     public static <T> ResResult<T> validateFailed() {

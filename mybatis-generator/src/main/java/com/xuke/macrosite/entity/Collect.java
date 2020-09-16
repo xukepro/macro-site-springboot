@@ -13,7 +13,7 @@ public class Collect implements Serializable {
     @ApiModelProperty(value = "文章id")
     private Integer aid;
 
-    private Date createAt;
+    private Date createdAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -41,12 +41,12 @@ public class Collect implements Serializable {
         this.aid = aid;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Collect implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", uid=").append(uid);
         sb.append(", aid=").append(aid);
-        sb.append(", createAt=").append(createAt);
+        sb.append(", createdAt=").append(createdAt);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -11,9 +11,9 @@ public class Category implements Serializable {
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
 
-    private Date createAt;
+    private Date createdAt;
 
-    private Date updateAt;
+    private Date updatedAt;
 
     private static final long serialVersionUID = 1L;
 
@@ -33,20 +33,20 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -57,8 +57,8 @@ public class Category implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", categoryName=").append(categoryName);
-        sb.append(", createAt=").append(createAt);
-        sb.append(", updateAt=").append(updateAt);
+        sb.append(", createdAt=").append(createdAt);
+        sb.append(", updatedAt=").append(updatedAt);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

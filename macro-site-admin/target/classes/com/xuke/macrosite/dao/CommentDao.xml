@@ -26,8 +26,8 @@
                u2.nickname to_nickname,
                c.parent_id,
                c.content,
-               c.create_at,
-               c.update_at
+               c.created_at,
+               c.updated_at
         FROM `comment` c
                  LEFT JOIN `user` u2 ON c.to_id = u2.id
                  JOIN article a ON c.aid = a.id

@@ -148,6 +148,9 @@
                 and a.description like #{key}
                 and a.content like #{key}
             </if>
+            <if test="cid != null">
+                and a.cid = #{cid}
+            </if>
         </where>
         order by a.created_at desc
     </select>
@@ -160,14 +163,14 @@
         select a.id,
                a.title,
                u.nickname author,
-               c.create_at
+               c.created_at
         from collect c,
              article a,
              user u
         where c.aid = a.id
           and a.uid = u.id
           and c.uid = #{uid}
-        order by c.create_at desc
+        order by c.created_at desc
     </select>
 
     <update id="addPageViews">

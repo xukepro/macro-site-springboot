@@ -36,6 +36,17 @@ public class ResPage<T> {
         return result;
     }
 
+    public static <T> ResPage<T> restPage(List<T> list, PageInfo<T> page){
+        ResPage<T> result = new ResPage<T>();
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
+        result.setTotalPage(page.getPages());
+        result.setPageNum(page.getPageNum());
+        result.setPageSize(page.getPageSize());
+        result.setTotal(page.getTotal());
+        result.setList(pageInfo.getList());
+        return result;
+    }
+
     /**
      * 将SpringData分页后的list转为分页信息
      */

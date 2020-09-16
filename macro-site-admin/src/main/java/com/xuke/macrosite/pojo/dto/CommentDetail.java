@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDetail {
+public class CommentDetail implements Serializable {
+    private static final long serialVersionUID = 4704082854792376279L;
     private Integer id;
     private User publisher;
     private Article article;

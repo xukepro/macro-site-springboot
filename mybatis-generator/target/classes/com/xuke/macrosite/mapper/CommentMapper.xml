@@ -8,8 +8,8 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="to_id" jdbcType="INTEGER" property="toId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
-    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, from_id, aid, parent_id, to_id, content, create_at, update_at
+    id, from_id, aid, parent_id, to_id, content, created_at, updated_at
   </sql>
   <select id="selectByExample" parameterType="com.xuke.macrosite.entity.CommentExample" resultMap="BaseResultMap">
     select
@@ -107,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into comment (from_id, aid, parent_id, 
-      to_id, content, create_at, 
-      update_at)
+      to_id, content, created_at, 
+      updated_at)
     values (#{fromId,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
-      #{toId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP})
+      #{toId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xuke.macrosite.entity.Comment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -134,11 +134,11 @@
       <if test="content != null">
         content,
       </if>
-      <if test="createAt != null">
-        create_at,
+      <if test="createdAt != null">
+        created_at,
       </if>
-      <if test="updateAt != null">
-        update_at,
+      <if test="updatedAt != null">
+        updated_at,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -157,11 +157,11 @@
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createAt != null">
-        #{createAt,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null">
-        #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -192,11 +192,11 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.createAt != null">
-        create_at = #{record.createAt,jdbcType=TIMESTAMP},
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updateAt != null">
-        update_at = #{record.updateAt,jdbcType=TIMESTAMP},
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -211,8 +211,8 @@
       parent_id = #{record.parentId,jdbcType=INTEGER},
       to_id = #{record.toId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      create_at = #{record.createAt,jdbcType=TIMESTAMP},
-      update_at = #{record.updateAt,jdbcType=TIMESTAMP}
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,11 +235,11 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createAt != null">
-        create_at = #{createAt,jdbcType=TIMESTAMP},
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateAt != null">
-        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -251,8 +251,8 @@
       parent_id = #{parentId,jdbcType=INTEGER},
       to_id = #{toId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      create_at = #{createAt,jdbcType=TIMESTAMP},
-      update_at = #{updateAt,jdbcType=TIMESTAMP}
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
