@@ -24,6 +24,6 @@ public class CommentDetail implements Serializable {
     private Integer parentId;
     private User receiver;
     private String content;
-    private Date createAt;
-    private Date updateAt;
+    private String createdAt;
+    private String updatedAt;
 }

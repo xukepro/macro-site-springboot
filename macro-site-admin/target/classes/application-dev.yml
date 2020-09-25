@@ -25,6 +25,12 @@ spring:
     # 连接超时时间（毫秒）
     timeout: 1000
 
+  #mail
+  mail:
+    username: 1020194752@qq.com
+    password: dxxqmunxaxxbbeha
+    host: smtp.qq.com
+
 logging:
   level:
     root: info

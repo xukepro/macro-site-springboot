@@ -23,12 +23,13 @@ public class ArticleDetail implements Serializable {
     private String title;
     private String description;
     private String category;
+    private String picture;
     private String content;
-    private List<Tag> tags;
+    private List<String> tags;
     private int pageViews;
     private int like;
     private int collect;
     private int comment;
-    private Date createAt;
-    private Date updateAt;
+    private String createdAt;
+    private String updatedAt;
 }

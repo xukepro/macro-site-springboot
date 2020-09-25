@@ -2,17 +2,11 @@ package com.xuke.macrosite;
 
 import com.xuke.macrosite.dao.ArticleDao;
 import com.xuke.macrosite.dao.CollectDao;
-import com.xuke.macrosite.entity.Article;
-import com.xuke.macrosite.pojo.dto.CollectArticle;
-import com.xuke.macrosite.pojo.vo.ArticleContentVO;
-import com.xuke.macrosite.pojo.vo.ArticleListVO;
 import com.xuke.macrosite.service.ArticleService;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * Created by xuke on 2020/9/11
@@ -48,7 +42,7 @@ public class ArticleTest {
 //        Article article = new Article();
 //        article.setId(7);
 //        article.setCid(2);
-//        ArticleContentVO update = articleService.update(article);
+//        ArticleContent update = articleService.update(article);
 //        System.out.println(update);
 //    }
 //
@@ -59,15 +53,15 @@ public class ArticleTest {
 //
 //    @Test
 //    public void getArticleList() {
-//        List<ArticleListVO> list = articleService.getArticleList(null, null);
-//        for (ArticleListVO a : list) {
+//        List<ArticleList> list = articleService.getArticleList(null, null);
+//        for (ArticleList a : list) {
 //            System.out.println(a);
 //        }
 //    }
 //
 //    @Test
 //    public void getArticleContent() {
-//        ArticleContentVO articleContent = articleService.getArticleContent(10);
+//        ArticleContent articleContent = articleService.getArticleContent(10);
 //        System.out.println(articleContent);
 //    }
 //

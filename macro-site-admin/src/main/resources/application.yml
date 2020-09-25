@@ -18,3 +18,23 @@ mybatis:
     - classpath*:com/**/dao/*.xml
   config-location:
     classpath:mybatis-config.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: macro-site-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+redis:
+  database: site
+  key:
+    prefix:
+      authCode: "authCode:"
+    expire:
+      authCode: 120 # 验证码超期时间
+
+
+# 自定义控制swagger
+swagger:
+  #是否开启接口文档
+  swagger-ui-open: true

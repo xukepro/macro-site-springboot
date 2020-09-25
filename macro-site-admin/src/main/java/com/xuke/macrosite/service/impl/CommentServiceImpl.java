@@ -1,6 +1,7 @@
 package com.xuke.macrosite.service.impl;
 
 import com.xuke.macrosite.dao.CommentDao;
+import com.xuke.macrosite.entity.Comment;
 import com.xuke.macrosite.pojo.dto.CommentDetail;
 import com.xuke.macrosite.service.CommentService;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,32 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDetail> getAllComment() {
         return commentDao.getAllComment();
+    }
+
+    @Override
+    public boolean deleteComment(Comment comment) {
+        return commentDao.deleteComment(comment) > 0;
+    }
+
+    @Override
+    public boolean deleteCommentByAId(Integer aid) {
+        Comment comment = new Comment();
+        comment.setAid(aid);
+        return deleteComment(comment);
+    }
+
+    @Override
+    public boolean deleteCommentById(Integer id) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        boolean res = deleteComment(comment);
+        if (!res) return false;
+
+        /* 删除子评论 */
+        Comment commentChild = new Comment();
+        commentChild.setParentId(id);
+        deleteComment(commentChild);
+
+        return true;
     }
 }

@@ -30,4 +30,6 @@ public interface CommentDao {
      * 管理员能看到的所有评论
      */
     List<CommentDetail> getAllComment();
+
+    Integer deleteComment(Comment comment);
 }

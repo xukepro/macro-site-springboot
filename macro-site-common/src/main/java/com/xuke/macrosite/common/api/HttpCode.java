@@ -46,7 +46,7 @@ public class HttpCode {
         switch (var0) {
             case 100:
                 return " Continue";
-            case 200:
+            case 20000:
                 return " OK";
             case 201:
                 return " Created";

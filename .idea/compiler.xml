@@ -7,9 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="macro-site-admin" />
-        <module name="macro-site-common" />
         <module name="macro-site-security" />
-        <module name="macro-site-springboot" />
+        <module name="macro-site-common" />
         <module name="mybatis-generator" />
       </profile>
     </annotationProcessing>

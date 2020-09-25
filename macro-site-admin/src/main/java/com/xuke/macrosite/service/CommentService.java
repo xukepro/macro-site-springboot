@@ -1,5 +1,6 @@
 package com.xuke.macrosite.service;
 
+import com.xuke.macrosite.entity.Comment;
 import com.xuke.macrosite.pojo.dto.CommentDetail;
 
 import java.util.List;
@@ -27,4 +28,10 @@ public interface CommentService {
      * 管理员能看到的所有评论
      */
     List<CommentDetail> getAllComment();
+
+    boolean deleteComment(Comment comment);
+
+    boolean deleteCommentByAId(Integer aid);
+
+    boolean deleteCommentById(Integer id);
 }

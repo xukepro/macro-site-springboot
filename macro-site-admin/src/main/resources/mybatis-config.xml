@@ -8,7 +8,8 @@
     </settings>
     <typeAliases>
         <package name="com.xuke.macrosite.entity"/>
-        <package name="com.xuke.macrosite.pojo.dto"/>
+        <package name="com.xuke.macrosite.pojo"/>
+        <package name="java.lang"/>
     </typeAliases>
 
 </configuration>

@@ -27,8 +27,8 @@ public class UserDetail implements Serializable {
     private Integer totalLike; // 总被点赞次数
     private Integer totalCollect; // 总文章被收藏次数
     private Integer totalPageViews; // 总文章浏览量
-    private List<Role> roles;
-    private Date lastLoginDate;
-    private Date createdAt;
-    private Date updatedAt;
+    private List<String> roles;
+    private String lastLoginDate;
+    private String createdAt;
+    private String updatedAt;
 }

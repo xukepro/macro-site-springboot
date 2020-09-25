@@ -35,6 +35,10 @@ public class ResResult<T> {
         return failed(code, HttpCode.msg(code));
     }
 
+//    public static <T> ResResult<T> failed(String message) {
+//        return failed(HttpCode.fail);
+//    }
+
     public static <T> ResResult<T> badRequest(String message) {
         return new <T>ResResult(HttpCode.HTTP_BAD_REQUEST, message, null);
     }

@@ -7,7 +7,15 @@
     </insert>
 
     <delete id="cancelCollect" parameterType="CollectParams">
-        delete from collect where uid = #{uid} and aid = #{aid}
+        delete from collect
+        <where>
+            <if test="uid != null">
+                uid = #{uid}
+            </if>
+            <if test="aid != null">
+                aid = #{aid}
+            </if>
+        </where>
     </delete>
 
     <select id="checkCollect" parameterType="CollectParams" resultType="Collect">

@@ -7,11 +7,18 @@
     </insert>
 
     <delete id="cancelLike">
-        delete from `like` where uid = #{uid} and aid = #{aid}
+        delete from `like`
+        <where>
+            <if test="uid != null">
+                uid = #{uid}
+            </if>
+            <if test="aid != null">
+                aid = #{aid}
+            </if>
+        </where>
     </delete>
 
     <select id="checkLike" parameterType="LikeParams" resultType="Like">
         select * from `like` where uid = #{uid} and aid = #{aid}
     </select>
-
 </mapper>

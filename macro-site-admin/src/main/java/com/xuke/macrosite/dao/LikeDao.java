@@ -1,18 +1,15 @@
 package com.xuke.macrosite.dao;
 
-import com.xuke.macrosite.entity.Article;
 import com.xuke.macrosite.entity.Like;
-import com.xuke.macrosite.pojo.dto.LikeParams;
-
-import java.util.List;
+import com.xuke.macrosite.pojo.vo.LikeParams;
 
 /**
  * Created by xuke on 2020/9/15
  */
 public interface LikeDao {
-    boolean addLike(LikeParams params);
+    Integer addLike(LikeParams params);
 
-    boolean cancelLike(LikeParams params);
+    Integer cancelLike(LikeParams params);
 
     Like checkLike(LikeParams params);
 }

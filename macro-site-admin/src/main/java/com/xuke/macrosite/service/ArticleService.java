@@ -1,11 +1,10 @@
 package com.xuke.macrosite.service;
 
-import com.xuke.macrosite.entity.Article;
-import com.xuke.macrosite.pojo.dto.ArticleDetail;
+import com.xuke.macrosite.pojo.dto.ArticleList;
 import com.xuke.macrosite.pojo.dto.CollectArticle;
-import com.xuke.macrosite.pojo.vo.AddArticleVO;
-import com.xuke.macrosite.pojo.vo.ArticleContentVO;
-import com.xuke.macrosite.pojo.vo.UpdateArticleVO;
+import com.xuke.macrosite.pojo.vo.AddArticleParams;
+import com.xuke.macrosite.pojo.dto.ArticleContent;
+import com.xuke.macrosite.pojo.vo.UpdateArticleParams;
 
 import java.util.List;
 
@@ -13,15 +12,15 @@ import java.util.List;
  * Created by xuke on 2020/9/11
  */
 public interface ArticleService {
-    List<ArticleDetail> getArticleList(Integer uid, String key, Integer cid, Integer pageSize, Integer pageNum);
+    List<ArticleList> getArticleList(Integer uid, String key, Integer cid, List<String> tags, Integer pageSize, Integer pageNum);
 
-    ArticleContentVO getArticleContent(Integer id);
+    ArticleContent getArticleContent(Integer id);
 
     List<CollectArticle> getMyCollectArticle(Integer uid);
 
-    Article insert(AddArticleVO article);
+    ArticleContent insert(AddArticleParams article);
 
-    ArticleContentVO update(UpdateArticleVO article);
+    ArticleContent update(UpdateArticleParams article);
 
     boolean deleteById(Integer id);
 

@@ -1,10 +1,9 @@
 package com.xuke.macrosite.dao;
 
 import com.xuke.macrosite.pojo.dto.ArticleDetail;
-import com.xuke.macrosite.entity.Article;
 import com.xuke.macrosite.pojo.dto.CollectArticle;
-import com.xuke.macrosite.pojo.vo.AddArticleVO;
-import com.xuke.macrosite.pojo.vo.UpdateArticleVO;
+import com.xuke.macrosite.pojo.vo.AddArticleParams;
+import com.xuke.macrosite.pojo.vo.UpdateArticleParams;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,11 +15,11 @@ import java.util.List;
 @Repository
 //@Mapper // @MapperScan替代
 public interface ArticleDao {
-    int insert(AddArticleVO article);
+    Integer insert(AddArticleParams article);
 
-    int update(UpdateArticleVO article);
+    Integer update(UpdateArticleParams article);
 
-    int deleteById(Integer id);
+    Integer deleteById(Integer id);
 
     List<ArticleDetail> getArticleList(@Param("uid") Integer uid, @Param("key") String key, @Param("cid") Integer cid);
 
@@ -28,5 +27,5 @@ public interface ArticleDao {
 
     List<CollectArticle> getMyCollectArticle(Integer uid);
 
-    boolean addPageViews(Integer id);
+    Integer addPageViews(Integer id);
 }

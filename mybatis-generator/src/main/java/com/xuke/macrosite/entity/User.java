@@ -28,6 +28,9 @@ public class User implements Serializable {
     @ApiModelProperty(value = "上次登录时间")
     private Date lastLoginDate;
 
+    @ApiModelProperty(value = "1为允许登录，0为不允许")
+    private Integer state;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -94,6 +97,14 @@ public class User implements Serializable {
         this.lastLoginDate = lastLoginDate;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -108,6 +119,7 @@ public class User implements Serializable {
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
         sb.append(", lastLoginDate=").append(lastLoginDate);
+        sb.append(", state=").append(state);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

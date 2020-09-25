@@ -14,6 +14,6 @@ public class CategoryDetail implements Serializable {
     private Integer id;
     private String categoryName;
     private Integer articleTotal;
-    private Date createdAt;
-    private Date updatedAt;
+    private String createdAt;
+    private String updatedAt;
 }

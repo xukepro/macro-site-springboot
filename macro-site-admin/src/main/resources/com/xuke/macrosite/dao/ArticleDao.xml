@@ -78,21 +78,11 @@
         where id = #{id}
     </delete>
 
-    <resultMap id="articleDetailMap" type="com.xuke.macrosite.pojo.dto.ArticleDetail">
+    <resultMap id="articleDetailMap" type="ArticleDetail" autoMapping="true">
         <result property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="author" column="author"/>
-        <result property="description" column="description"/>
-        <result property="content" column="content"/>
         <result property="category" column="category_name"/>
-        <result property="pageViews" column="page_views"/>
-        <result property="like" column="like"/>
-        <result property="collect" column="collect"/>
-        <result property="comment" column="comment"/>
-        <result property="createAt" column="created_at"/>
-        <result property="updateAt" column="updated_at"/>
-        <collection property="tags" ofType="com.xuke.macrosite.entity.Tag">
-            <result property="tagName" column="tag_name"/>
+        <collection property="tags" ofType="String">
+            <result column="tag_name"/>
         </collection>
     </resultMap>
 
@@ -102,14 +92,15 @@
                a.title,
                a.description,
                c.category_name,
+               a.picture,
                a.content,
                a.page_views,
                t.tag_name,
                IFNULL(l.`like`, 0)      `like`,
                IFNULL(col.collect, 0)   collect,
                IFNULL(com.`comment`, 0) `comment`,
-               a.created_at,
-               a.updated_at
+               date_format(a.created_at, '%Y-%c-%d %h:%i:%s') created_at,
+               date_format(a.updated_at, '%Y-%c-%d %h:%i:%s') updated_at
         FROM article a
                  LEFT JOIN `user` u ON a.uid = u.id
                  LEFT JOIN category c ON a.cid = c.id
@@ -134,14 +125,15 @@
 
     <select id="getArticleContent" resultMap="articleDetailMap">
         <include refid="getArticleDetailsSql"/>
-        where a.id = #{id}
+        where a.id = #{id} and a.state = 1
     </select>
 
     <select id="getArticleList" resultMap="articleDetailMap">
         <include refid="getArticleDetailsSql"/>
         <where>
+                a.state = 1
             <if test="uid != null">
-                a.uid = #{uid}
+                and a.uid = #{uid}
             </if>
             <if test="key != null">
                 and a.title like #{key}
@@ -156,14 +148,14 @@
     </select>
 
     <resultMap id="collectArticle" type="CollectArticle">
-        <result property="collectDate" column="create_at" />
+        <result property="collectDate" column="created_at" />
     </resultMap>
 
     <select id="getMyCollectArticle" resultMap="collectArticle">
         select a.id,
                a.title,
                u.nickname author,
-               c.created_at
+               date_format(c.created_at, '%Y-%c-%d %h:%i:%s') created_at
         from collect c,
              article a,
              user u

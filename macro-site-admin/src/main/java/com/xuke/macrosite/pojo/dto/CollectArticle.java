@@ -20,5 +20,5 @@ public class CollectArticle implements Serializable {
     private int id;
     private String author;
     private String title;
-    private Date collectDate;
+    private String collectDate;
 }

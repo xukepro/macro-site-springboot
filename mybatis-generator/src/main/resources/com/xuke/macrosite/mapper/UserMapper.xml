@@ -10,6 +10,7 @@
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
+    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, nickname, email, created_at, updated_at, last_login_date
+    id, username, password, nickname, email, created_at, updated_at, last_login_date, 
+    state
   </sql>
   <select id="selectByExample" parameterType="com.xuke.macrosite.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -98,10 +100,10 @@
     </selectKey>
     insert into user (username, password, nickname, 
       email, created_at, updated_at, 
-      last_login_date)
+      last_login_date, state)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{lastLoginDate,jdbcType=TIMESTAMP})
+      #{lastLoginDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.xuke.macrosite.entity.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -130,6 +132,9 @@
       <if test="lastLoginDate != null">
         last_login_date,
       </if>
+      <if test="state != null">
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -152,6 +157,9 @@
       </if>
       <if test="lastLoginDate != null">
         #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -188,6 +196,9 @@
       <if test="record.lastLoginDate != null">
         last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -202,7 +213,8 @@
       email = #{record.email,jdbcType=VARCHAR},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP}
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

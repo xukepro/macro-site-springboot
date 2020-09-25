@@ -7,11 +7,5 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://47.93.42.142:3306/macro_site</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="macro_site@localhost" uuid="74352741-ce8b-40f5-8196-b3f7cb8b214d">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/macro_site?serverTimezone=UTC&amp;useSSL=false</jdbc-url>
-    </data-source>
   </component>
 </project>

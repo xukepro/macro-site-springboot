@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xuke.macrosite.dao.RoleDao">
 
+    <insert id="addUserRole">
+        insert into user_role (uid, rid)
+        values (#{uid}, #{rid});
+    </insert>
+
+    <select id="getRoleId" resultType="Role">
+        select *
+        from role
+        where role = #{role};
+    </select>
 </mapper>

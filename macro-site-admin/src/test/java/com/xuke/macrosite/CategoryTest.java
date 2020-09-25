@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by xuke on 2020/9/16
  */
-@SpringBootTest
+@SpringBootTest(classes = CategoryTest.class)
 public class CategoryTest {
     @Resource
     private CategoryDao categoryDao;
