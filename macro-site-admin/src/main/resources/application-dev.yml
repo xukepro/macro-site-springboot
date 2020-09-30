@@ -25,6 +25,15 @@ spring:
     # 连接超时时间（毫秒）
     timeout: 1000
 
+  data:
+    mongodb:
+      host: 10.128.207.76
+      port: 27020
+      database: macro_site
+#      uri:
+  #      password: 123456
+#      username: xuke
+
   #mail
   mail:
     username: 1020194752@qq.com
@@ -35,3 +44,30 @@ logging:
   level:
     root: info
     com.xuke.macrosite: debug
+
+# 以下为自定义参数
+# jwt参数
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: macro-site-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+# redis参数
+redis:
+  database: site
+  key:
+    prefix:
+      authCode: "authCode:"
+    expire:
+      authCode: 120 # 验证码超期时间
+
+
+# 自定义控制swagger
+swagger:
+  #是否开启接口文档
+  swagger-ui-open: true
+
+# websocket参数
+ws:
+  port: 8081

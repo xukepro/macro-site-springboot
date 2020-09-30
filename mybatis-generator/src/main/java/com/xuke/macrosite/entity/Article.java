@@ -26,14 +26,14 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "文章图片")
     private String picture;
 
+    @ApiModelProperty(value = "显示状态：0禁止，1公开，2私有，3保存到草稿箱")
+    private Integer state;
+
     @ApiModelProperty(value = "创建时间")
     private Date createdAt;
 
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;
-
-    @ApiModelProperty(value = "显示状态，1为显示，0为不显示")
-    private Integer state;
 
     @ApiModelProperty(value = "文章内容")
     private String content;
@@ -96,6 +96,14 @@ public class Article implements Serializable {
         this.picture = picture;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -110,14 +118,6 @@ public class Article implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
     }
 
     public String getContent() {
@@ -141,9 +141,9 @@ public class Article implements Serializable {
         sb.append(", cid=").append(cid);
         sb.append(", pageViews=").append(pageViews);
         sb.append(", picture=").append(picture);
+        sb.append(", state=").append(state);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
-        sb.append(", state=").append(state);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

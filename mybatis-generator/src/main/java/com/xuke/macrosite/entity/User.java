@@ -22,14 +22,14 @@ public class User implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private Date createdAt;
 
+    @ApiModelProperty(value = "1为允许登录，0为不允许")
+    private Integer state;
+
     @ApiModelProperty(value = "更新时间")
     private Date updatedAt;
 
     @ApiModelProperty(value = "上次登录时间")
     private Date lastLoginDate;
-
-    @ApiModelProperty(value = "1为允许登录，0为不允许")
-    private Integer state;
 
     private static final long serialVersionUID = 1L;
 
@@ -81,6 +81,14 @@ public class User implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -97,14 +105,6 @@ public class User implements Serializable {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -117,9 +117,9 @@ public class User implements Serializable {
         sb.append(", nickname=").append(nickname);
         sb.append(", email=").append(email);
         sb.append(", createdAt=").append(createdAt);
+        sb.append(", state=").append(state);
         sb.append(", updatedAt=").append(updatedAt);
         sb.append(", lastLoginDate=").append(lastLoginDate);
-        sb.append(", state=").append(state);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

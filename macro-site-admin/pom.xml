@@ -9,9 +9,9 @@
     </parent>
 
     <groupId>com.xuke.macrosite</groupId>
-    <artifactId>macor-site-admin</artifactId>
+    <artifactId>macro-site-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>macor-site-admin</name>
+    <name>macro-site-admin</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

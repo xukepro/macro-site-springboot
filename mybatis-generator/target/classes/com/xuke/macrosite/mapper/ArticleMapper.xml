@@ -9,9 +9,9 @@
     <result column="cid" jdbcType="INTEGER" property="cid" />
     <result column="page_views" jdbcType="INTEGER" property="pageViews" />
     <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="state" jdbcType="INTEGER" property="state" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xuke.macrosite.entity.Article">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -75,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, uid, title, description, cid, page_views, picture, created_at, updated_at, state
+    id, uid, title, description, cid, page_views, picture, state, created_at, updated_at
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -134,11 +134,11 @@
     </selectKey>
     insert into article (uid, title, description, 
       cid, page_views, picture, 
-      created_at, updated_at, state, 
+      state, created_at, updated_at, 
       content)
     values (#{uid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{cid,jdbcType=INTEGER}, #{pageViews,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xuke.macrosite.entity.Article">
@@ -165,14 +165,14 @@
       <if test="picture != null">
         picture,
       </if>
+      <if test="state != null">
+        state,
+      </if>
       <if test="createdAt != null">
         created_at,
       </if>
       <if test="updatedAt != null">
         updated_at,
-      </if>
-      <if test="state != null">
-        state,
       </if>
       <if test="content != null">
         content,
@@ -197,14 +197,14 @@
       <if test="picture != null">
         #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
       <if test="createdAt != null">
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -241,14 +241,14 @@
       <if test="record.picture != null">
         picture = #{record.picture,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
       <if test="record.createdAt != null">
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updatedAt != null">
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -267,9 +267,9 @@
       cid = #{record.cid,jdbcType=INTEGER},
       page_views = #{record.pageViews,jdbcType=INTEGER},
       picture = #{record.picture,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -284,9 +284,9 @@
       cid = #{record.cid,jdbcType=INTEGER},
       page_views = #{record.pageViews,jdbcType=INTEGER},
       picture = #{record.picture,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=INTEGER}
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -312,14 +312,14 @@
       <if test="picture != null">
         picture = #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
       <if test="createdAt != null">
         created_at = #{createdAt,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedAt != null">
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -335,9 +335,9 @@
       cid = #{cid,jdbcType=INTEGER},
       page_views = #{pageViews,jdbcType=INTEGER},
       picture = #{picture,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -349,9 +349,9 @@
       cid = #{cid,jdbcType=INTEGER},
       page_views = #{pageViews,jdbcType=INTEGER},
       picture = #{picture,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

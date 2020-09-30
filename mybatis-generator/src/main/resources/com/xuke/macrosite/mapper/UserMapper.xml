@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xuke.macrosite.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.xuke.macrosite.entity.User">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="state" jdbcType="INTEGER" property="state" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
-    <result column="state" jdbcType="INTEGER" property="state" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,8 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, nickname, email, created_at, updated_at, last_login_date, 
-    state
+    id, username, password, nickname, email, created_at, state, updated_at, last_login_date
   </sql>
   <select id="selectByExample" parameterType="com.xuke.macrosite.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -88,6 +87,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.xuke.macrosite.entity.UserExample">
     delete from user
     <if test="_parameter != null">
@@ -99,11 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (username, password, nickname, 
-      email, created_at, updated_at, 
-      last_login_date, state)
+      email, created_at, state, 
+      updated_at, last_login_date)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{lastLoginDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER})
+      #{email,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{lastLoginDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xuke.macrosite.entity.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -126,14 +135,14 @@
       <if test="createdAt != null">
         created_at,
       </if>
+      <if test="state != null">
+        state,
+      </if>
       <if test="updatedAt != null">
         updated_at,
       </if>
       <if test="lastLoginDate != null">
         last_login_date,
-      </if>
-      <if test="state != null">
-        state,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -152,14 +161,14 @@
       <if test="createdAt != null">
         #{createdAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
       <if test="updatedAt != null">
         #{updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="lastLoginDate != null">
         #{lastLoginDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -190,14 +199,14 @@
       <if test="record.createdAt != null">
         created_at = #{record.createdAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
       <if test="record.updatedAt != null">
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
       <if test="record.lastLoginDate != null">
         last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -212,11 +221,53 @@
       nickname = #{record.nickname,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER},
       updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
-      state = #{record.state,jdbcType=INTEGER}
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuke.macrosite.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuke.macrosite.entity.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

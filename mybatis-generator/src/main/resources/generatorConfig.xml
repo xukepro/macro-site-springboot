@@ -31,6 +31,7 @@
                         connectionURL="${jdbc.connectionURL}"
                         userId="${jdbc.userId}"
                         password="${jdbc.password}">
+            <property name="nullCatalogMeansCurrent" value="true"/> <!--解决连接到别的数据库的问题-->
         </jdbcConnection>
 
         <!-- 生成model模型，设置对应的包名(targetPackage)和存放路径(targetProject)。targetProject可以指定具体的路径,如./src/main/java,也可以使用MAVEN来自动生成,这样生成的代码会在target/generatord-source目录下 -->
@@ -44,37 +45,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.xuke.macrosite.mapper"
                              targetProject="mybatis-generator/src/main/java/"/>
 
-        <table tableName="article">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="article_tag">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="avatar">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="category">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="collect">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="comment">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="role">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="like">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="tag">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="user">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table tableName="user_role">
+        <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>
