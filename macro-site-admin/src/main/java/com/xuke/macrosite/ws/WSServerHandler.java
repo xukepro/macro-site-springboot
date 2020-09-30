@@ -3,6 +3,11 @@ package com.xuke.macrosite.ws;
 import com.xuke.macrosite.common.protobuf.ChatContentProto;
 import com.xuke.macrosite.common.protobuf.ChatMsgProto;
 import com.xuke.macrosite.constant.ChatMsgType;
+import com.xuke.macrosite.dao.UserFriendDao;
+import com.xuke.macrosite.mongodb.document.FriendChatDocument;
+import com.xuke.macrosite.mongodb.repository.FriendChatRepository;
+import com.xuke.macrosite.service.ArticleService;
+import com.xuke.macrosite.utils.SpringUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,6 +22,7 @@ import java.util.Date;
 @ChannelHandler.Sharable
 @Slf4j
 public class WSServerHandler extends SimpleChannelInboundHandler<ChatMsgProto.ChatMsg> {
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("channelActive");
@@ -48,9 +54,28 @@ public class WSServerHandler extends SimpleChannelInboundHandler<ChatMsgProto.Ch
             case ChatMsgType.FRIEND:
                 log.info("朋友发消息");
                 System.out.println(chatContent);
+                System.out.println(msg);
                 int fid = chatContent.getReceiveId();
                 Channel channel = WSSocketHolder.get(fid);
-                channel.writeAndFlush(msg);
+                FriendChatDocument chatMsg = new FriendChatDocument();
+                chatMsg.setUid(msg.getUid());
+                chatMsg.setFid(msg.getContent().getReceiveId());
+                chatMsg.setMsgType(msg.getType());
+                chatMsg.setMsgContent(msg.getContent().getMsgContent());
+
+                chatMsg.setCreatedAt(new Date());
+                if (channel == null) {
+                    /*离线消息*/
+                    log.info("用户离线");
+                    chatMsg.setState(0);
+                } else {
+                    chatMsg.setState(1);
+                    channel.writeAndFlush(msg);
+                }
+                /*保存数据到mongo*/
+                FriendChatRepository friendChatRepository = SpringUtil.getBean("friendChatRepository", FriendChatRepository.class);
+                System.out.println(friendChatRepository);
+                friendChatRepository.save(chatMsg);
                 break;
             case ChatMsgType.FRIEND_ASK:
                 break;
