@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: macro-site-chat-server
+  redis:
+#    host: 47.93.42.142
+    host: 10.128.207.76
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: 123456
+    # 连接超时时间（毫秒）
+    timeout: 1000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: -1
+        max-wait: 8
+        min-idle: 0
+
+server:
+  port: 8100
+
+dubbo:
+  application:
+    name: dubbo-route
+  registry:
+    address: zookeeper://47.93.42.142:2181
+
+logging:
+  level:
+    root: info
+    com.xuke.macrosite.route: debug
+
+# 自定义配置
+app:
+  zk:
+    addr: 47.93.42.142:2181
+    connect:
+      timeout: 15000
+    root: /route
+  route:
+    way: com.xuke.macrosite.common.route.algorithm.loop.LoopHandle
+    consitenthash: com.xuke.macrosite.common.route.algorithm.consistenthash.TreeMapConsistentHash
+  redis:
+    prefix:
+      account: "macro-site-account:"
+      route: "macro-site-route:"
+      login-status: "macro-site-login-status:"
+      group-user: "macro-site-group-user:"
+      user-friend: "macro-site-user-friend:"

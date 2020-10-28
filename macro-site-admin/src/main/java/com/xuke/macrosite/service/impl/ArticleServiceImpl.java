@@ -42,6 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         List<ArticleList> articleListVOList = new ArrayList<>();
         a: for (ArticleDetail articleDetail : articleDetailList) {
+            /* 根据tag筛选结果 */
             if (tags != null && tags.size() != 0) {
                 for (String tag : tags) {
                     if (!articleDetail.getTags().contains(tag)) continue a;

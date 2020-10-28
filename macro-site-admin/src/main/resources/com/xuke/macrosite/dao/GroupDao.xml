@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuke.macrosite.dao.GroupDao">
+
+    <resultMap id="groupDetailMap" type="com.xuke.macrosite.common.dto.GroupDetail" autoMapping="true">
+        <!--        <id column="id" jdbcType="INTEGER" property="id"/>-->
+        <result property="gid" column="id"/>
+        <collection property="userList" ofType="com.xuke.macrosite.common.dto.GroupUserDetail" columnPrefix="user_"
+                    autoMapping="true">
+        </collection>
+    </resultMap>
+
+    <sql id="getGroupDetailSql">
+        SELECT g.id,
+               g.uid,
+               g.name,
+               g.avatar,
+               g.remark,
+               gu.id                                           user_id,
+               gu.gid                                          user_gid,
+               gu.uid                                          user_uid,
+               gu.remark                                       user_remark,
+               gu.`rank`                                       user_rank,
+               a.url                                           user_avatar,
+               u.nickname                                      user_nickname,
+               date_format(gu.created_at, '%Y-%c-%d %h:%i:%s') user_created_at,
+               date_format(gu.updated_at, '%Y-%c-%d %h:%i:%s') user_updated_at,
+               date_format(g.created_at, '%Y-%c-%d %h:%i:%s')  created_at,
+               UNIX_TIMESTAMP(g.updated_at) updated_at
+        FROM `group` g
+                 LEFT JOIN group_user gu ON g.id = gu.gid
+                 LEFT JOIN avatar a on gu.uid = a.uid
+                 LEFT JOIN user u on u.id = gu.uid
+    </sql>
+
+    <select id="getGroupUserDetail" resultMap="groupDetailMap">
+        <include refid="getGroupDetailSql"/>
+    </select>
+
+    <select id="getGroupUserDetailByGid" resultMap="groupDetailMap">
+        <include refid="getGroupDetailSql"/>
+        where g.id = #{gid}
+    </select>
+
+    <resultMap id="userGroupMap" type="UserGroupVO" autoMapping="true">
+        <id property="gid" column="id"/>
+        <collection property="userList" ofType="com.xuke.macrosite.common.dto.GroupUserDetail" columnPrefix="user_"
+                    autoMapping="true"/>
+    </resultMap>
+
+    <select id="getUserGroupVOByUid" resultMap="userGroupMap">
+        SELECT gul.*
+        FROM group_user gu
+                 LEFT JOIN (SELECT g.id,
+                                   g.uid,
+                                   g.name,
+                                   g.avatar,
+                                   g.remark,
+                                   gu.id                                           user_id,
+                                   gu.gid                                          user_gid,
+                                   gu.uid                                          user_uid,
+                                   gu.remark                                       user_remark,
+                                   gu.`rank`                                       user_rank,
+                                   a.url                                           user_avatar,
+                                   u.nickname                                      user_nickname,
+                                   date_format(gu.created_at, '%Y-%c-%d %h:%i:%s') user_created_at,
+                                   date_format(gu.updated_at, '%Y-%c-%d %h:%i:%s') user_updated_at,
+                                   date_format(g.created_at, '%Y-%c-%d %h:%i:%s')  created_at,
+                                   UNIX_TIMESTAMP(g.updated_at) updated_at
+                            FROM `group` g
+                                     LEFT JOIN group_user gu ON g.id = gu.gid
+                                     LEFT JOIN avatar a on gu.uid = a.uid
+                                     LEFT JOIN user u on u.id = gu.uid) gul on gul.id = gu.gid
+        WHERE gu.uid = #{uid}
+    </select>
+
+    <insert id="createGroup" keyProperty="id" useGeneratedKeys="true">
+        insert into `group` (uid, name, avatar, remark)
+        values (#{uid,jdbcType=INTEGER},
+                #{name,jdbcType=VARCHAR},
+                #{avatar,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateGroup">
+        update `group`
+        <set>
+            <if test="uid != null">
+                `uid` = #{uid},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGroup">
+        delete
+        from `group`
+        where id = #{id}
+    </delete>
+
+    <insert id="addGroupUser">
+        insert into group_user (gid, uid, remark, `rank`)
+        values (#{gid,jdbcType=INTEGER},
+                #{uid,jdbcType=INTEGER},
+                #{remark,jdbcType=VARCHAR},
+                #{rank,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateGroupUser">
+        update `group`
+        <set>
+            <if test="rank != null">
+                `rank` = #{rank},
+            </if>
+            <if test="remark != null">
+                `remark` = #{remark},
+            </if>
+        </set>
+        where uid = #{uid} and gid = #{gid}
+    </update>
+
+    <delete id="deleteGroupUser">
+        delete
+        from group_user
+        <where>
+            <if test="gid != null">
+                gid = #{gid}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+        </where>
+    </delete>
+
+    <select id="isGroupNameExisted" resultType="java.lang.Boolean">
+        <![CDATA[ select count(*)
+                  from `group` where name = #{groupName}]]>
+    </select>
+
+    <select id="isGroupUserExisted" resultType="java.lang.Boolean">
+        <![CDATA[ select count(*)
+                  from `group_user` where gid = #{gid} and uid = #{uid}]]>
+    </select>
+</mapper>

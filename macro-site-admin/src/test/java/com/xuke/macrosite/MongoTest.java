@@ -1,16 +1,17 @@
 package com.xuke.macrosite;
 
-import com.xuke.macrosite.mongodb.document.FriendChatDocument;
-import com.xuke.macrosite.mongodb.repository.FriendChatRepository;
-import com.xuke.macrosite.pojo.dto.UserFriendDetail;
-import com.xuke.macrosite.service.UserFriendService;
+import com.xuke.macrosite.common.mongodb.document.FriendChatDocument;
+import com.xuke.macrosite.common.mongodb.document.GroupChatDocument;
+import com.xuke.macrosite.common.mongodb.repository.FriendChatRepository;
+import com.xuke.macrosite.common.mongodb.repository.GroupChatRepository;
+import com.xuke.macrosite.pojo.vo.UserFriendVO;
+import com.xuke.macrosite.service.FriendService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,36 +19,58 @@ import java.util.List;
  */
 @SpringBootTest
 public class MongoTest {
+
     @Resource
     private FriendChatRepository repository;
+
     @Resource
-    private UserFriendService userFriendService;
+    private GroupChatRepository groupChatRepository;
+
+    @Resource
+    private FriendService friendService;
 
     @Test
     public void test() {
-//        FriendChatDocument chatMsg = new FriendChatDocument();
-//        chatMsg.setUid(1);
-//        chatMsg.setFid(2);
-//        chatMsg.setMsgType(1);
-//        chatMsg.setMsgContent("asdfasd");
-//        chatMsg.setState(0);
-//        chatMsg.setCreatedAt(new Date());
-//        repository.save(chatMsg);
+        FriendChatDocument document = FriendChatDocument.builder()
+                .uid(2)
+                .fid(1)
+                .type(1)
+                .content("msg2")
+                .read(true)
+                .createdAt(new Date().getTime())
+                .build();
 
-//        Pageable pageable = PageRequest.of(0, 10);
-//        List<FriendChatDocument> list = repository.findByUidAndFidOrderByCreatedAtDesc(1, 2, pageable);
-//        for (FriendChatDocument friendChatDocument : list) {
-//            System.out.println(friendChatDocument);
-//        }
-
-        System.out.println(repository.countByUidAndFidAndState(1, 2, 0));
+        repository.save(document);
+        System.out.println(repository.countByUidAndFidAndRead(1, 2, true));
     }
 
     @Test
     public void test1() {
-        List<UserFriendDetail> list = userFriendService.getUserFriend(1);
-        for (UserFriendDetail friendDetail : list) {
+        List<UserFriendVO> list = friendService.getUserFriend(1);
+        for (UserFriendVO friendDetail : list) {
             System.out.println(friendDetail);
         }
+    }
+
+    @Test
+    public void test2() {
+        HashMap<Integer, Boolean> map = new HashMap<>();
+        map.put(2, false);
+        map.put(3, false);
+        GroupChatDocument document = GroupChatDocument.builder()
+                .uid(1)
+                .gid(1)
+                .type(1)
+                .content("unread")
+                .userReadMap(map)
+                .createdAt(new Date().getTime())
+                .build();
+
+        groupChatRepository.save(document);
+    }
+
+    @Test
+    public void test3() {
+        System.out.println(groupChatRepository.countByGidAndUidAndRead(1, 2, false));
     }
 }

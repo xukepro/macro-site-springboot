@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 //@Mapper // @MapperScan替代
 public interface ArticleDao {
+
     Integer insert(AddArticleParams article);
 
     Integer update(UpdateArticleParams article);

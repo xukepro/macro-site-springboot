@@ -13,6 +13,7 @@ import java.util.List;
  * Created by xuke on 2020/9/11
  */
 public interface UserDao {
+
     List<UserDetail> getUserInfo(@Param("uid") Integer uid);
 
     List<UserDetail> getAllUserInfo();

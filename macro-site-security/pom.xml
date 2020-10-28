@@ -25,6 +25,19 @@
             <artifactId>macro-site-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--JWT(Json Web Token)登录支持-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -33,7 +46,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <classifier>exec</classifier>
+                    <skip>true</skip>
+<!--                    <classifier>exec</classifier>-->
                 </configuration>
             </plugin>
         </plugins>

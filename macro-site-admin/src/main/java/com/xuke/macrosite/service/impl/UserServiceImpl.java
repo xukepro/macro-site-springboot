@@ -1,7 +1,8 @@
 package com.xuke.macrosite.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.xuke.macrosite.common.api.ResResult;
+import com.xuke.macrosite.common.enums.ResCode;
+import com.xuke.macrosite.common.exception.BusinessException;
 import com.xuke.macrosite.common.service.MailService;
 import com.xuke.macrosite.common.service.RedisService;
 import com.xuke.macrosite.dao.UserDao;
@@ -15,7 +16,6 @@ import com.xuke.macrosite.service.RoleService;
 import com.xuke.macrosite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResResult login(LoginParams params) {
+    public LoginInfo login(LoginParams params) {
         String token = null;
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(params.getUsername());
@@ -98,7 +98,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (token == null) {
-            return ResResult.validateFailed("用户名或密码错误");
+            throw new BusinessException(ResCode.BAD_REQUEST, "用户名或密码错误");
+//            return ResResult.validateFailed("用户名或密码错误");
         }
         LoginInfo loginInfo = getLoginInfo(params.getUsername());
         loginInfo.setToken(token);
@@ -109,7 +110,7 @@ public class UserServiceImpl implements UserService {
         user.setLastLoginDate(new Date(System.currentTimeMillis()));
         userDao.updateByPrimaryKeySelective(user);
 
-        return ResResult.success(loginInfo);
+        return loginInfo;
     }
 
     @Override
@@ -119,10 +120,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResResult register(RegisterParams params) {
+    public User register(RegisterParams params) {
         boolean result = verifyAuthCode(params.getEmail(), params.getAuthCode());
         if(!result) {
-            return ResResult.badRequest("验证码错误");
+            throw new BusinessException(ResCode.BAD_REQUEST, "验证码错误");
+//            return ResResult.badRequest("验证码错误");
         }
 
         User user = new User();
@@ -130,7 +132,8 @@ public class UserServiceImpl implements UserService {
         //检查用户是否存在
         boolean isExisted = checkIsExisted(user);
         if (isExisted) {
-            return ResResult.badRequest("用户已存在");
+            throw new BusinessException(ResCode.BAD_REQUEST, "用户已存在");
+//            return ResResult.badRequest("用户已存在");
         }
 
         user.setPassword(passwordEncoder.encode(params.getPassword()));
@@ -143,18 +146,18 @@ public class UserServiceImpl implements UserService {
         /*首次注册为普通用户*/
         roleService.addUserRole(user.getId(), ORDINARY_USER_ROLEE);
 
-        return ResResult.success("注册成功", user);
+        return user;
     }
 
     @Override
     @Transactional
-    public ResResult sendAuthCode(String email) {
+    public String sendAuthCode(String email) {
         //检查邮箱是否已绑定
         User user = new User();
         user.setEmail(email);
         boolean isExisted = checkIsExisted(user);
         if(isExisted){
-            return ResResult.badRequest("邮箱已存在");
+            throw new BusinessException(ResCode.BAD_REQUEST, "邮箱已存在");
         }
 
         //生成验证码
@@ -168,19 +171,18 @@ public class UserServiceImpl implements UserService {
         //发送邮件
         new Thread(() -> {
             try {
-                LOGGER.error("1");
+//                LOGGER.error("1");
                 mailService.sendMail(email, authCode);
-                LOGGER.error("2");
+//                LOGGER.error("2");
                 redisService.set(REDIS_KEY_PREFIX_AUTH_CODE + email, authCode);
                 redisService.expire(REDIS_KEY_PREFIX_AUTH_CODE + email, AUTH_CODE_EXPIRE_SECONDS);
             } catch (MessagingException e) {
                 e.printStackTrace();
-//                ResResult.failed(HttpCode.HTTP_INTERNAL_ERROR, "发送验证码失败");
                 LOGGER.error("发送验证码失败");
             }
         }, "sendMail").start();
 
-        return ResResult.success(null, "发送验证码成功");
+        return "发送验证码成功";
     }
 
     /* 检查用户是否存在 */

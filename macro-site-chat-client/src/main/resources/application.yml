@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: macro-site-chat-client
+
+
+server:
+  port: 8300
+
+app:
+  uid: 1
+  route:
+    url: http://localhost:8100/
+  ws:
+    heartbeat:
+      time: 10
+    reconnect:
+      count: 5
+

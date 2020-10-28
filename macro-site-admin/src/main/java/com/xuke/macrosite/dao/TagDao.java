@@ -11,6 +11,7 @@ import java.util.List;
  * Created by xuke on 2020/9/19
  */
 public interface TagDao {
+
     Integer addTag(Tag tag);
 
     List<Tag> getTag(@Param("id") Integer id, @Param("tagName") String tagName);

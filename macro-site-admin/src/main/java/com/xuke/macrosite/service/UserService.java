@@ -1,6 +1,5 @@
 package com.xuke.macrosite.service;
 
-import com.xuke.macrosite.common.api.ResResult;
 import com.xuke.macrosite.entity.User;
 import com.xuke.macrosite.pojo.dto.LoginInfo;
 import com.xuke.macrosite.pojo.vo.LoginParams;
@@ -18,13 +17,13 @@ public interface UserService {
 
     List<UserDetail> getAllUserInfo();
 
-    ResResult<Object> login(LoginParams params);
+    LoginInfo login(LoginParams params);
 
     LoginInfo getLoginInfo(String username);
 
-    ResResult register(RegisterParams params);
+    User register(RegisterParams params);
 
-    ResResult sendAuthCode(String email);
+    String sendAuthCode(String email);
 
     boolean verifyAuthCode(String email, String authCode);
 

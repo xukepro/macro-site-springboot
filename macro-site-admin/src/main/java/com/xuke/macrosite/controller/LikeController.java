@@ -1,8 +1,10 @@
 package com.xuke.macrosite.controller;
 
-import com.xuke.macrosite.common.api.ResResult;
+import com.xuke.macrosite.common.enums.ResCode;
+import com.xuke.macrosite.common.exception.BusinessException;
 import com.xuke.macrosite.pojo.vo.LikeParams;
 import com.xuke.macrosite.service.LikeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import javax.annotation.Resource;
 /**
  * Created by xuke on 2020/9/15
  */
+@Api(tags = "LikeController")
 @RestController
 @RequestMapping("like")
 public class LikeController {
@@ -23,19 +26,21 @@ public class LikeController {
 
     @ApiOperation("点赞")
     @PostMapping("add")
-    public ResResult<Boolean> addLike(@RequestBody @Validated LikeParams params) {
+    public boolean addLike(@RequestBody @Validated LikeParams params) {
         boolean flag = likeService.checkLike(params);
-        if (flag) return ResResult.badRequest("已经点赞过了,不能重复点赞");
-        return ResResult.success(likeService.addLike(params));
+        if (flag) {
+            throw new BusinessException(ResCode.BAD_REQUEST, "已经点赞过了,不能重复点赞");
+        }
+        return likeService.addLike(params);
     }
 
     @ApiOperation("取消点赞")
     @PostMapping("cancel")
-    public ResResult<Boolean> cancelLike(@RequestBody @Validated LikeParams params) {
+    public boolean cancelLike(@RequestBody @Validated LikeParams params) {
         boolean flag = likeService.checkLike(params);
         if (!flag) {
-            return ResResult.badRequest("没有点赞过，无法取消点赞");
+            throw new BusinessException(ResCode.BAD_REQUEST, "没有点赞过，无法取消点赞");
         }
-        return ResResult.success(likeService.cancelLike(params));
+        return likeService.cancelLike(params);
     }
 }

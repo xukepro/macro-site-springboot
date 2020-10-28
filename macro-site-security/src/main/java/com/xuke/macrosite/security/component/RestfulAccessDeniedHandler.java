@@ -1,10 +1,10 @@
 package com.xuke.macrosite.security.component;
 
 import cn.hutool.json.JSONUtil;
-import com.xuke.macrosite.common.api.ResResult;
+import com.xuke.macrosite.common.enums.ResCode;
+import com.xuke.macrosite.common.res.ErrorResult;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.getWriter().println(JSONUtil.parse(ResResult.forbidden(e.getMessage())));
+        response.getWriter().println(JSONUtil.parse(ErrorResult.fail(ResCode.FORBIDDEN, e)));
         response.getWriter().flush();
     }
 }
